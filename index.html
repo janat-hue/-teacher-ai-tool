@@ -1,106 +1,13 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Teacher Tool</title>
-  <style>
-    :root {
-      color-scheme: light;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      margin: 2rem;
-      line-height: 1.5;
-      max-width: 900px;
-    }
-
-    h1 {
-      margin-bottom: 0.5rem;
-    }
-
-    .mode-switcher {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 0.75rem 1rem;
-      border: 1px solid #d8d8d8;
-      border-radius: 0.5rem;
-      margin: 1.5rem 0;
-      background: #fafafa;
-    }
-
-    .mode-switcher label {
-      font-weight: 600;
-    }
-
-    select {
-      padding: 0.4rem 0.5rem;
-      border-radius: 0.35rem;
-      border: 1px solid #bdbdbd;
-      min-width: 250px;
-    }
-
-    .step-list {
-      padding-left: 1.25rem;
-    }
-
-    .step-list li {
-      margin: 0.3rem 0;
-    }
-  </style>
+<title>AI Teacher Tool</title>
 </head>
 <body>
-  <h1>Nástroj pro návrh úkolů</h1>
 
-  <div class="mode-switcher">
-    <label for="mode-select">Režim použití:</label>
-    <select id="mode-select" aria-label="Přepínač režimu použití">
-      <option value="workshop" selected>Workshop redesignu zadání</option>
-      <option value="quick">Rychlý návrh úkolu</option>
-    </select>
-  </div>
+<h1>Nástroj pro návrh úkolů</h1>
 
-  <h2 id="mode-title">Workshop redesignu zadání</h2>
-  <ol id="steps" class="step-list"></ol>
+<p>OVU → H1–H3 → AIAS → OSAP → AI stopa</p>
 
-  <script>
-    const modeSelect = document.getElementById('mode-select');
-    const modeTitle = document.getElementById('mode-title');
-    const steps = document.getElementById('steps');
-
-    const modes = {
-      quick: {
-        title: 'Rychlý návrh úkolu',
-        items: ['Generátor', 'Doporučení podle modelu', 'AI stopa']
-      },
-      workshop: {
-        title: 'Workshop redesignu zadání',
-        items: [
-          'Problém',
-          'Model',
-          'Analýza',
-          'Porovnání',
-          'Reflexe',
-          'Redesign',
-          'Generátor'
-        ]
-      }
-    };
-
-    function renderMode(mode) {
-      const config = modes[mode] || modes.workshop;
-      modeTitle.textContent = config.title;
-      steps.innerHTML = config.items.map((item) => `<li>${item}</li>`).join('');
-    }
-
-    modeSelect.addEventListener('change', (event) => {
-      renderMode(event.target.value);
-    });
-
-    renderMode('workshop');
-  </script>
 </body>
 </html>
