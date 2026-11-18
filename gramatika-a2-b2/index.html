@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="artifact-type" content="dashboard">
 <meta name="design-style" content="vitals">
-<title>Interaktivní přehled anglické gramatiky (A2–B2)</title>
+<title>English Grammar Explorer · A2–C1</title>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Figtree:wght@400;600;700;800&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -762,15 +762,40 @@ button, input, select, textarea { font-family: inherit; }
     scroll-behavior: auto !important;
   }
 }
+
+.topic-tabs{display:flex;flex-direction:column;gap:1rem}
+.level-group{display:flex;flex-direction:column;gap:.5rem;width:100%;border:1px solid var(--outline-variant);border-radius:var(--rounded-lg);padding:.75rem;background:var(--surface-container-low)}
+.level-heading{font:700 .95rem var(--font-headline);color:var(--on-primary-container);padding:.25rem .5rem}
+.level-heading span{color:var(--on-surface-variant);font-weight:400}
+.level-buttons{display:flex;gap:.45rem;flex-wrap:wrap}
+.level-buttons .topic-tab{background:#fff}
+.matrix-level th{background:var(--primary-container);color:var(--on-primary-container);font-weight:800;font-size:.9rem;padding:.65rem .9rem;text-align:left}
+.diagnostic-intro{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--pastel-mint);border:1px solid #bad7ca;padding:1.3rem 1.5rem;border-radius:var(--rounded-lg)}
+.diagnostic-intro p{margin:.2rem 0 0;color:#305744}
+.diagnostic-intro strong{font-size:1.15rem}
+#diagnostic-panel{gap:1.15rem}
+.diag-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.7rem;align-items:center}
+.diag-progress{height:12px;background:var(--surface-container);border-radius:99px;overflow:hidden}
+.diag-progress>span{display:block;height:100%;background:var(--primary);border-radius:99px;transition:width .2s}
+.diag-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.diag-option{min-height:3.5rem;text-align:left;padding:.7rem 1rem;border:2px solid var(--outline-variant);border-radius:var(--rounded);background:#fff;cursor:pointer}
+.diag-option[aria-pressed=true]{border-color:var(--primary);background:var(--primary-container);font-weight:800}
+.diag-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem}
+.diag-score{padding:.8rem;border-radius:var(--rounded);background:var(--surface-container-low)}
+.diag-score strong{display:block;font-size:1.5rem}
+.diag-recommendations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.diag-recommendations button{text-align:left;white-space:normal}
+@media(max-width:700px){.diag-options,.diag-recommendations{grid-template-columns:1fr}.diag-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
 <div class="page-grid">
   <header class="top-header">
     <div class="brand-block">
-      <p class="kicker" id="ui-kicker">Studijní průvodce A2–B2</p>
+      <p class="kicker" id="ui-kicker">Studijní průvodce A2–C1</p>
       <h1 class="title" id="ui-title">Přehled anglické gramatiky a časů</h1>
-      <p class="lede" id="ui-lede">Interaktivní přehled 12 klíčových gramatických témat: časové osy, signální slova, oboustranné kartičky a kvízy s okamžitou zpětnou vazbou.</p>
+      <p class="lede" id="ui-lede">24 gramatických modulů A2–C1 v logickém pořadí. Nejdřív zjisti, co už umíš.</p>
     </div>
     <div class="toolbar" role="region" aria-label="Nastavení jazyka a přístupnosti">
       <div class="control-group" role="group" aria-label="Jazyk rozhraní">
@@ -789,10 +814,15 @@ button, input, select, textarea { font-family: inherit; }
     </div>
   </header>
 
+  <section class="diagnostic-intro" id="diagnostic-intro">
+    <div><strong id="diag-welcome">Zjisti, co už umíš</strong><p id="diag-summary">24 otázek z úrovní A2–C1</p></div>
+    <button type="button" class="btn btn-primary" id="diag-start" onclick="beginDiagnostic()">Spustit diagnostický kvíz →</button>
+  </section>
+  <section class="panel" id="diagnostic-panel" aria-live="polite" hidden></section>
   <section class="kpi-strip" aria-label="Přehled pokroku">
     <div class="status-card" data-status="info">
       <div class="kpi-label" id="kpi-topics-lbl">Prostudovaná témata</div>
-      <div class="kpi-value" id="kpi-topics-val">0 / 12</div>
+      <div class="kpi-value" id="kpi-topics-val">0 / 24</div>
       <div class="kpi-caption" id="kpi-topics-cap">Označte téma po přečtení</div>
     </div>
     <div class="status-card" data-status="ok">
@@ -807,19 +837,19 @@ button, input, select, textarea { font-family: inherit; }
     </div>
     <div class="status-card" data-status="info">
       <div class="kpi-label" id="kpi-level-lbl">Úroveň a rozsah</div>
-      <div class="kpi-value">A2–B2</div>
+      <div class="kpi-value">A2–C1</div>
       <div class="kpi-caption" id="kpi-level-cap">Časy, podmínky, členy, zájmena</div>
     </div>
   </section>
 
-  <nav class="nav-panel" aria-label="Navigace gramatických témat">
+  <nav class="nav-panel" id="module-nav" aria-label="Navigace gramatických témat">
     <div class="nav-top-row">
       <div class="cat-pills" role="group" aria-label="Filtr kategorií">
-        <button type="button" class="cat-pill" id="cat-all" aria-pressed="true" onclick="setCategory('all')">Vše (12)</button>
-        <button type="button" class="cat-pill" id="cat-present" aria-pressed="false" onclick="setCategory('present')">Přítomnost</button>
-        <button type="button" class="cat-pill" id="cat-past" aria-pressed="false" onclick="setCategory('past')">Minulost</button>
-        <button type="button" class="cat-pill" id="cat-future" aria-pressed="false" onclick="setCategory('future')">Budoucnost</button>
-        <button type="button" class="cat-pill" id="cat-struct" aria-pressed="false" onclick="setCategory('struct')">Podmínky, členy &amp; zájmena</button>
+        <button type="button" class="cat-pill" id="cat-all" aria-pressed="true" onclick="setCategory('all')">Vše (24)</button>
+        <button type="button" class="cat-pill" id="cat-A2" aria-pressed="false" onclick="setCategory('A2')">A2</button>
+        <button type="button" class="cat-pill" id="cat-B1" aria-pressed="false" onclick="setCategory('B1')">B1</button>
+        <button type="button" class="cat-pill" id="cat-B2" aria-pressed="false" onclick="setCategory('B2')">B2</button>
+        <button type="button" class="cat-pill" id="cat-C1" aria-pressed="false" onclick="setCategory('C1')">C1</button>
       </div>
       <div class="search-field">
         <label class="field-label" for="topic-search" id="ui-search-lbl">Hledat téma nebo signální slovo</label>
@@ -829,7 +859,7 @@ button, input, select, textarea { font-family: inherit; }
     <div class="topic-tabs" id="topic-tabs" role="tablist"></div>
   </nav>
 
-  <main class="workspace-grid">
+  <main class="workspace-grid" id="module-workspace">
     <section class="panel" aria-labelledby="topic-title">
       <div class="topic-header">
         <div>
@@ -909,7 +939,7 @@ button, input, select, textarea { font-family: inherit; }
   </main>
 
   <footer class="footer-note">
-    <span id="ui-sources">Zdrojové podklady: Přehledy a infografiky anglické gramatiky A2–B2 (časy, TO BE, IF 0–2, členy, zájmena).</span>
+    <span id="ui-sources">Gramatické moduly A2–C1.</span>
     <span id="ui-state-status">Pokrok se ukládá automaticky.</span>
   </footer>
 </div>
@@ -1030,6 +1060,9 @@ const UI = {
     emptySearch: `Жодна тема не відповідає пошуку.`
   }
 };
+
+const PATH_COPY={"cs":{"k":"Studijní průvodce A2–C1","d":"24 gramatických modulů uspořádaných podle návaznosti. Diagnostický kvíz ti doporučí, co procvičit.","src":"Anglická gramatika A2–C1. Pokrok se ukládá lokálně v prohlížeči.","all":"Vše (24)","diag":"Spustit diagnostický kvíz","intro":"24 otázek · orientační diagnostika · doporučení témat","quit":"Zpět k modulům","next":"Další otázka","results":"Výsledky diagnostiky","again":"Opakovat kvíz","recommended":"Doporučené moduly k procvičení","perfect":"Výborně, žádná chyba v této orientační diagnostice.","note":"Jedna otázka z každého modulu. Výsledek není oficiálním určením úrovně CEFR.","question":"Otázka","levels":{"A2":"Základy","B1":"Mírně pokročilí","B2":"Středně pokročilí","C1":"Pokročilí"},"tip":"Vyber odpověď a pokračuj.","welcome":"Zjisti, co už umíš"},"en":{"k":"Study Guide A2–C1","d":"24 grammar modules in a clear progression. The diagnostic suggests what to practise next.","src":"English grammar A2–C1. Progress is saved locally in this browser.","all":"All (24)","diag":"Start diagnostic quiz","intro":"24 questions · diagnostic overview · personalised practice suggestions","quit":"Back to modules","next":"Next question","results":"Diagnostic results","again":"Retake the quiz","recommended":"Recommended modules to practise","perfect":"Excellent! No mistakes in this short diagnostic.","note":"One question per module. This is not an official CEFR level assessment.","question":"Question","levels":{"A2":"Foundations","B1":"Intermediate","B2":"Upper-intermediate","C1":"Advanced"},"tip":"Choose an answer and continue.","welcome":"Find your starting point"},"uk":{"k":"Навчальний посібник A2–C1","d":"24 послідовні модулі граматики. Діагностика рекомендує теми для тренування.","src":"Граматика A2–C1. Прогрес зберігається лише в цьому браузері.","all":"Усі (24)","diag":"Почати діагностику","intro":"24 питання · діагностика · рекомендації для практики","quit":"Повернутися до модулів","next":"Наступне питання","results":"Результати діагностики","again":"Повторити тест","recommended":"Рекомендовані модулі","perfect":"Чудово! Без помилок у короткому тесті.","note":"По одному питанню з кожного модуля. Це не офіційне оцінювання CEFR.","question":"Питання","levels":{"A2":"Основи","B1":"Середній","B2":"Вище середнього","C1":"Просунутий"},"tip":"Оберіть відповідь і продовжуйте.","welcome":"Перевірте свої знання"}};
+for (const lang of ['cs','en','uk']){const p=PATH_COPY[lang];UI[lang].kicker=p.k;UI[lang].lede=p.d;UI[lang].sources=p.src;UI[lang].levelCap='A2–C1';UI[lang].cats={all:p.all,A2:'A2',B1:'B1',B2:'B2',C1:'C1'};}
 
 const ORIGINAL_TOPICS = [
   {
@@ -1489,7 +1522,7 @@ function getTopic(id) {
 function getFilteredTopics() {
   const q = state.search.trim().toLowerCase();
   return TOPICS.filter(t => {
-    const catOk = state.cat === `all` || t.cat === state.cat;
+    const catOk = state.cat === `all` || t.level === state.cat;
     if (!catOk) return false;
     if (!q) return true;
     const hay = [
@@ -1601,32 +1634,21 @@ function renderKPIs() {
   setText(`kpi-cards-val`, String(state.cardsFlipped));
 }
 
-function renderTabs() {
-  const container = document.getElementById(`topic-tabs`);
-  if (!container) return;
-  const list = getFilteredTopics();
-  if (list.length === 0) {
-    container.innerHTML = `<p style="margin:0;color:var(--on-surface-variant);">${UI[state.lang].emptySearch}</p>`;
-    return;
-  }
-  if (!list.some(t => t.id === state.topicId)) {
-    state.topicId = list[0].id;
-    state.fcIndex = 0;
-    state.fcFlipped = false;
-    state.qIndex = 0;
-    state.qAnswered = false;
-    state.qSessionScore = 0;
-  }
-  container.innerHTML = list.map(t => {
-    const isSel = t.id === state.topicId;
-    const isDone = state.doneIds.includes(t.id);
-    return `<button type="button" class="topic-tab" role="tab" aria-selected="${isSel}" onclick="selectTopic('${t.id}')">
-      <span class="done-dot ${isDone ? `is-done` : ``}" aria-hidden="true"></span>
-      <span>${t.name[state.lang]}</span>
-    </button>`;
-  }).join(``);
+function renderTabs(){
+ const box=document.getElementById('topic-tabs');if(!box)return;
+ const list=getFilteredTopics();
+ if(!list.length){box.textContent=UI[state.lang].emptySearch;return}
+ if(!list.some(t=>t.id===state.topicId)){
+ state.topicId=list[0].id;state.fcIndex=0;state.fcFlipped=false;state.qIndex=0;state.qAnswered=false;state.qSessionScore=0;
+ }
+ const p=PATH_COPY[state.lang];
+ box.innerHTML=['A2','B1','B2','C1'].map(level=>{
+  const ts=list.filter(t=>t.level===level);if(!ts.length)return '';
+  return '<section class="level-group"><div class="level-heading"><strong>'+level+'</strong> · '+p.levels[level]+' <span>('+ts.length+')</span></div><div class="level-buttons">'
+   +ts.map(t=>'<button type="button" class="topic-tab" role="tab" aria-selected="'+(t.id===state.topicId)+'" onclick="selectTopic(\''+t.id+'\')"><span class="done-dot '+(state.doneIds.includes(t.id)?'is-done':'')+'" aria-hidden="true"></span><span>'+t.name[state.lang]+'</span></button>').join('')
+   +'</div></section>';
+ }).join('');
 }
-
 function renderTimelineSVG(kind) {
   const svg = document.getElementById(`timeline-svg`);
   if (!svg) return;
@@ -1716,8 +1738,9 @@ function renderTopic() {
     `).join(``);
   }
 
-  renderTimelineSVG(t.tl.kind);
-  setText(`timeline-desc`, t.tl.desc[state.lang]);
+  const timelineCard=document.getElementById('timeline-box');
+  if(timelineCard)timelineCard.hidden=(t.cat==='struct'&&!t.id.startsWith('conditional_'));
+  if(!timelineCard||!timelineCard.hidden){renderTimelineSVG(t.tl.kind);setText('timeline-desc',t.tl.desc[state.lang]);}
 
   const acc = document.getElementById(`rules-accordion`);
   if (acc) {
@@ -1807,18 +1830,10 @@ function renderQuiz() {
   }
 }
 
-function renderTable() {
-  const tb = document.getElementById(`compare-tbody`);
-  if (!tb) return;
-  tb.innerHTML = TOPICS.map(t => `
-    <tr style="cursor:pointer; ${t.id === state.topicId ? `background:var(--primary-container);` : ``}" onclick="selectTopic('${t.id}')">
-      <td><strong>${t.name[state.lang]}</strong></td>
-      <td><code>${t.shortForm}</code></td>
-      <td>${t.shortSig}</td>
-    </tr>
-  `).join(``);
+function renderTable(){
+ const tb=document.getElementById('compare-tbody');if(!tb)return;
+ tb.innerHTML=['A2','B1','B2','C1'].map(level=>'<tr class="matrix-level"><th colspan="3">'+level+'</th></tr>'+TOPICS.filter(t=>t.level===level).map(t=>'<tr style="cursor:pointer;'+(t.id===state.topicId?'background:var(--primary-container)':'')+'" onclick="selectTopic(\''+t.id+'\')"><td><strong>'+t.name[state.lang]+'</strong></td><td><code>'+t.shortForm+'</code></td><td>'+t.shortSig+'</td></tr>').join('')).join('');
 }
-
 /* Interactive handlers — function declarations for hoisting */
 function setLang(l) {
   state.lang = l;
@@ -1826,6 +1841,7 @@ function setLang(l) {
   renderUIText();
   renderTabs();
   renderTopic();
+  updateDiagnosticLanguage();
   saveState();
 }
 
@@ -2040,7 +2056,7 @@ async function initApp() {
         if (saved.lang && UI[saved.lang]) state.lang = saved.lang;
         if (typeof saved.dys === `boolean`) state.dys = saved.dys;
         if (typeof saved.scale === `number`) state.scale = saved.scale;
-        if (saved.cat) state.cat = saved.cat;
+        if (saved.cat) state.cat = ['all','A2','B1','B2','C1'].includes(saved.cat)?saved.cat:'all';
         if (saved.topicId && TOPICS.some(t => t.id === saved.topicId)) state.topicId = saved.topicId;
         if (saved.mode) state.mode = saved.mode;
         if (Array.isArray(saved.doneIds)) state.doneIds = saved.doneIds;
@@ -2056,10 +2072,51 @@ async function initApp() {
   renderKPIs();
   renderTabs();
   renderTopic();
+  updateDiagnosticLanguage();
 
   if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
     window.notebookAppApi.notifyAppReady();
   }
+}
+
+
+let diagnosticIndex=0,diagnosticActive=false,diagnosticAnswers=[];
+function diagnosticQuestions(){return TOPICS.map(t=>{const q=t.quiz.find(x=>x.type==='mc');if(!q||!q.opts.includes(q.a))throw Error('No diagnostic question for '+t.id);return {...q,topicId:t.id,level:t.level,topic:t.name.en};})}
+function updateDiagnosticLanguage(){
+ const u=PATH_COPY[state.lang];
+ document.getElementById('diag-welcome').textContent=u.welcome;
+ document.getElementById('diag-summary').textContent=u.intro;
+ document.getElementById('diag-start').textContent=u.diag+' →';
+ if(diagnosticActive)renderDiagnostic();
+}
+function beginDiagnostic(){diagnosticActive=true;diagnosticIndex=0;diagnosticAnswers=[];renderDiagnostic();document.getElementById('diagnostic-panel').scrollIntoView({behavior:'smooth',block:'start'})}
+function closeDiagnostic(){diagnosticActive=false;['module-nav','module-workspace','diagnostic-intro'].forEach(id=>document.getElementById(id).hidden=false);document.getElementById('diagnostic-panel').hidden=true}
+function diagnosticChoose(n){const q=diagnosticQuestions()[diagnosticIndex];if(!q||n<0||n>=q.opts.length)return;diagnosticAnswers[diagnosticIndex]=q.opts[n];renderDiagnostic()}
+function diagnosticNext(){if(diagnosticAnswers[diagnosticIndex]===undefined)return;diagnosticIndex++;renderDiagnostic()}
+function openFromDiagnostic(id){
+ closeDiagnostic();state.cat='all';state.search='';document.getElementById('topic-search').value='';
+ renderUIText();selectTopic(id);document.getElementById('module-nav').scrollIntoView({behavior:'smooth'});
+}
+function renderDiagnostic(){
+ if(!diagnosticActive)return;
+ ['module-nav','module-workspace','diagnostic-intro'].forEach(id=>document.getElementById(id).hidden=true);
+ const panel=document.getElementById('diagnostic-panel'),qs=diagnosticQuestions(),u=PATH_COPY[state.lang];panel.hidden=false;
+ if(diagnosticIndex>=qs.length){
+  const missed=qs.filter((q,i)=>diagnosticAnswers[i]!==q.a);
+  const summary=['A2','B1','B2','C1'].map(level=>{const matching=qs.map((q,i)=>({q,i})).filter(x=>x.q.level===level);return {level,total:matching.length,correct:matching.filter(x=>diagnosticAnswers[x.i]===x.q.a).length}});
+  panel.innerHTML='<div class="diag-top"><h2 class="topic-title">'+u.results+'</h2><button class="btn btn-secondary" onclick="closeDiagnostic()">'+u.quit+'</button></div>'
+  +'<p>'+u.note+'</p><h3>'+u.results+': '+(qs.length-missed.length)+' / '+qs.length+'</h3>'
+  +'<div class="diag-summary-grid">'+summary.map(s=>'<div class="diag-score"><span>'+s.level+'</span><strong>'+s.correct+'/'+s.total+'</strong><small>'+Math.round(100*s.correct/s.total)+'%</small></div>').join('')+'</div>'
+  +'<h3>'+u.recommended+'</h3>'
+  +(missed.length?'<div class="diag-recommendations">'+missed.map(q=>'<button type="button" class="btn btn-secondary" onclick="openFromDiagnostic(\''+q.topicId+'\')"><strong>'+q.level+'</strong> · '+q.topic+' →</button>').join('')+'</div>':'<p>'+u.perfect+'</p>')
+  +'<div class="diag-top"><button class="btn btn-primary" onclick="beginDiagnostic()">'+u.again+'</button><button class="btn btn-secondary" onclick="closeDiagnostic()">'+u.quit+'</button></div>';
+  return;
+ }
+ const q=qs[diagnosticIndex],chosen=diagnosticAnswers[diagnosticIndex]!==undefined;
+ panel.innerHTML='<div class="diag-top"><div><span class="chip">'+q.level+'</span> <span class="kpi-caption">'+u.question+' '+(diagnosticIndex+1)+' / '+qs.length+'</span></div><button class="btn btn-secondary" onclick="closeDiagnostic()">'+u.quit+'</button></div>'
+  +'<div class="diag-progress" role="progressbar" aria-label="Diagnostic progress" aria-valuemin="0" aria-valuemax="'+qs.length+'" aria-valuenow="'+diagnosticIndex+'"><span style="width:'+(100*diagnosticIndex/qs.length)+'%"></span></div>'
+  +'<p class="topic-subtitle">'+q.topic+'</p><h2 class="topic-title">'+q.q+'</h2><div class="diag-options">'+q.opts.map((o,i)=>'<button type="button" class="diag-option" aria-pressed="'+(diagnosticAnswers[diagnosticIndex]===o)+'" onclick="diagnosticChoose('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>').join('')+'</div>'
+  +'<div class="diag-top"><span class="kpi-caption">'+u.tip+'</span><button type="button" class="btn btn-primary" '+(!chosen?'disabled':'')+' onclick="diagnosticNext()">'+(diagnosticIndex===qs.length-1?u.results:u.next)+' →</button></div>';
 }
 
 initApp();
