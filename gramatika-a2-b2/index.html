@@ -788,6 +788,25 @@ button, input, select, textarea { font-family: inherit; }
 @media(max-width:700px){.diag-options,.diag-recommendations{grid-template-columns:1fr}.diag-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 [hidden]{display:none!important}
+
+#irregular-intro{background:var(--pastel-lavender);border-color:#d9d2ef}
+#irregular-panel{scroll-margin-top:1rem}
+.iv-controls{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem;align-items:center}
+.iv-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.iv-actions input{min-width:min(270px,80vw)}
+.iv-scroll{overflow:auto;max-height:660px;border:1px solid var(--outline-variant);border-radius:var(--rounded)}
+.iv-table{min-width:650px}
+.iv-table thead{position:sticky;top:0;z-index:2}
+.iv-table td{vertical-align:middle}
+.iv-speech{font:700 1rem var(--font-body);padding:.55rem .25rem;background:transparent;border:0;border-radius:.4rem;cursor:pointer;color:var(--on-surface);text-align:left;min-height:44px;min-width:80px}
+.iv-speech:hover{background:var(--primary-container)}
+.iv-triple{white-space:nowrap;font-size:.8rem}
+#iv-quiz{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;max-width:650px}
+#iv-quiz input{width:min(100%,400px)}
+.iv-feedback{font-weight:700}
+.iv-good{color:var(--secondary)}
+.iv-bad{color:var(--error)}
+
 </style>
 </head>
 <body>
@@ -820,6 +839,21 @@ button, input, select, textarea { font-family: inherit; }
     <button type="button" class="btn btn-primary" id="diag-start" onclick="beginDiagnostic()">Spustit diagnostický kvíz →</button>
   </section>
   <section class="panel" id="diagnostic-panel" aria-live="polite" hidden></section>
+<section class="diagnostic-intro" id="irregular-intro" aria-label="Irregular verbs">
+  <div><strong id="iv-home-title">Irregular Verbs · Nepravidelná slovesa</strong><p id="iv-home-summary">91 sloves · A2–C1 · poslech výslovnosti · procvičování</p></div>
+  <button type="button" class="btn btn-primary" onclick="openIrregularVerbs()">🔊 Irregular Verbs →</button>
+</section>
+<section class="panel" id="irregular-panel" hidden aria-label="Irregular verbs explorer">
+ <div class="diag-top"><div><span class="kicker">A2 · B1 · B2 · C1</span><h2 class="topic-title" id="iv-title">Nepravidelná slovesa</h2><p class="topic-subtitle" id="iv-sub"></p></div>
+ <button type="button" class="btn btn-secondary" id="iv-close">← Zpět</button></div>
+ <p class="topic-subtitle" id="iv-guide"></p>
+ <div id="iv-learning">
+  <div class="iv-controls"><div id="iv-levels" class="cat-pills"></div><div class="iv-actions"><input type="search" class="text-input" id="iv-search" placeholder="Hledat sloveso..." autocomplete="off"><button type="button" class="btn btn-primary" id="iv-start">Procvičit tvary →</button></div></div>
+  <div class="diag-top"><h3 id="iv-hint">Poslouchej výslovnost kliknutím na každý tvar.</h3><span class="chip" id="iv-count">91 / 91</span></div>
+  <div id="iv-results"></div>
+ </div>
+ <div id="iv-quiz" hidden></div>
+</section>
   <section class="kpi-strip" aria-label="Přehled pokroku">
     <div class="status-card" data-status="info">
       <div class="kpi-label" id="kpi-topics-lbl">Prostudovaná témata</div>
@@ -2122,5 +2156,7 @@ function renderDiagnostic(){
 
 initApp();
 </script>
+<script src="./irregular-verbs-data.js"></script>
+<script src="./irregular-verbs.js"></script>
 </body>
 </html>
