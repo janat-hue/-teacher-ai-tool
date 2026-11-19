@@ -1,5 +1,5 @@
 /* Irregular verbs learning module for the A2-C1 grammar explorer.
-   Spoken audio uses the visitor's browser SpeechSynthesis (no uploaded recordings). */
+   English MP3 audio is played with native HTML5 audio. */
 (function(){
 "use strict";
 const all=window.YANA_IRREGULAR_VERBS||[];
@@ -14,69 +14,76 @@ uk:{heading:"Неправильні дієслова",sub:"Три форми, з
 function tr(){return T[language()]}
 function active(){return $("irregular-panel")&&!$("irregular-panel").hidden}
 function filtered(){const needle=search.toLocaleLowerCase();return all.filter(v=>(level==="all"||v.level===level)&&[v.base,v.past,v.participle,v.cs,v.uk].join(" ").toLocaleLowerCase().includes(needle))}
-/* Mobile WebKit: no cancel() immediately before speak() and always start
-   directly from the real tap/click. Hold a strong utterance reference. */
-let activeUtterances=[];
-function stopSpeech(){
- activeUtterances=[];
- if("speechSynthesis" in window){try{window.speechSynthesis.cancel()}catch(e){}}
- const el=$("iv-speech-status");if(el)el.textContent="";
-}
-function readText(v,form){
+/* Mobile audio: HTML5 MP3 playback instead of system TTS.
+   Native controls allow manual playback if an iOS in-app browser blocks scripts.
+   Only the spoken English word is sent to an external pronunciation service. */
+let audioPlayer=null,audioSources=[],audioAttempt=0,activePhrase="";
+const audioCS={
+cs:{loading:"🔊 Načítám nahrávku…",playing:"🔊 Přehrávám",manual:"Klepni na ▶ v přehrávači. Pokud zvuk nezačne, otevři web přímo v Safari.",unavailable:"Zvuk se nepodařilo načíst. Zkontroluj internet nebo otevři stránku přímo v Safari.",fallback:"Zkouším jiný zdroj zvuku…"},
+en:{loading:"🔊 Loading audio…",playing:"🔊 Playing",manual:"Tap ▶ on the player. If it fails, open the page directly in Safari.",unavailable:"Couldn't load audio. Check the internet or open the page in Safari.",fallback:"Trying another audio source…"},
+uk:{loading:"🔊 Завантаження аудіо…",playing:"🔊 Відтворення",manual:"Натисніть ▶ у плеєрі або відкрийте сайт у Safari.",unavailable:"Не вдалося завантажити аудіо. Перевірте інтернет або відкрийте Safari.",fallback:"Інше джерело аудіо…"}
+};
+function audioLocale(){return audioCS[language()]}
+function speechStatus(message){const node=$("iv-speech-status");if(node)node.textContent=message}
+function soundWord(v,form){
  if(v.base==="read"&&form!=="base")return "red";
+ if(v.base==="be"&&form==="past")return "was";
+ if(v.base==="get"&&form==="participle")return "got";
  return v[form].split(" / ")[0];
 }
-function voices(){
- if(!("speechSynthesis" in window))return [];
- try{return window.speechSynthesis.getVoices().filter(v=>/^en([_-]|$)/i.test(v.lang))}
- catch(e){return []}
+function buildAudioSources(text,isPhrase){
+ const q=encodeURIComponent(text);
+ const yo="https://dict.youdao.com/dictvoice?audio="+q+"&type=1";
+ if(isPhrase)return [yo];
+ const clean=text.toLowerCase().replace(/[^a-z-]/g,"");
+ const dict="https://api.dictionaryapi.dev/media/pronunciations/en/"+clean+"-uk.mp3";
+ const us="https://api.dictionaryapi.dev/media/pronunciations/en/"+clean+"-us.mp3";
+ return [yo,dict,us];
 }
-function speechStatus(message){
- const node=$("iv-speech-status");if(node)node.textContent=message;
-}
-function englishVoice(){
- const list=voices();
- return list.find(x=>/^en-GB$/i.test(x.lang))||list.find(x=>/^en-US$/i.test(x.lang))||list[0]||null;
-}
-function speakNow(text){
- if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance==="undefined"){
-   speechStatus(tr().noVoice);return;
+function audioElement(){
+ if(audioPlayer)return audioPlayer;
+ audioPlayer=document.getElementById("iv-native-audio");
+ if(!audioPlayer){
+  audioPlayer=document.createElement("audio");audioPlayer.id="iv-native-audio";
+  audioPlayer.controls=true;audioPlayer.preload="none";
+  audioPlayer.style.width="min(100%,360px)";
+  const wrap=document.querySelector(".iv-audio-tools");if(wrap)wrap.appendChild(audioPlayer);
  }
- const synth=window.speechSynthesis;
- const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang="en-GB";utterance.rate=.85;utterance.pitch=1;utterance.volume=1;
- const voice=englishVoice();if(voice){utterance.voice=voice;utterance.lang=voice.lang}
- activeUtterances.push(utterance);
- const status=language()==="cs"?"🔊 Přehrávání…":language()==="uk"?"🔊 Відтворення…":"🔊 Speaking…";
- speechStatus(status);
- utterance.onstart=()=>speechStatus(status);
- utterance.onend=()=>{
-  activeUtterances=activeUtterances.filter(x=>x!==utterance);
-  if(!activeUtterances.length)speechStatus("");
- };
- utterance.onerror=e=>{
-  activeUtterances=activeUtterances.filter(x=>x!==utterance);
-  const help=language()==="cs"?"Zvuk se nepodařilo spustit. Zkus otevřít stránku přímo v Safari a klepnout znovu.":language()==="uk"?"Не вдалося відтворити. Відкрийте сторінку в Safari й спробуйте знову.":"Playback failed. Open this page directly in Safari and tap again.";
-  if(e.error!=="canceled"&&e.error!=="interrupted")speechStatus(help);
- };
- // The speak() call must remain synchronously inside the button click on iOS.
- try{
-  if(synth.paused)synth.resume();
-  synth.speak(utterance);
- }catch(e){speechStatus(tr().noVoice)}
-}
-function play(v,form){
- // Do not cancel the previous utterance here: mobile Safari can silently
- // discard the next utterance if cancel() is immediately followed by speak().
- speakNow(readText(v,form));
-}
-function playThree(v){
- const parts=["base","past","participle"].map(form=>{
-  if(v.base==="be"&&form==="past")return "was, were";
-  if(v.base==="get"&&form==="participle")return "got, gotten";
-  return readText(v,form);
+ audioPlayer.addEventListener("playing",()=>speechStatus(audioLocale().playing+" · "+activePhrase));
+ audioPlayer.addEventListener("waiting",()=>speechStatus(audioLocale().loading));
+ audioPlayer.addEventListener("error",()=>{
+  if(audioAttempt+1<audioSources.length){audioAttempt++;speechStatus(audioLocale().fallback);setAudioSource(true)}
+  else{speechStatus(audioLocale().unavailable)}
  });
- speakNow(parts.join(". "));
+ audioPlayer.addEventListener("ended",()=>speechStatus(""));
+ return audioPlayer;
+}
+function setAudioSource(){
+ const a=audioElement();if(!audioSources.length)return;
+ a.src=audioSources[audioAttempt];a.load();
+ const promise=a.play();
+ if(promise&&typeof promise.catch==="function")promise.catch(()=>{
+  if(!a.error)speechStatus(audioLocale().manual);
+ });
+}
+function startAudio(text,isPhrase){
+ activePhrase=text;audioSources=buildAudioSources(text,isPhrase);audioAttempt=0;
+ const a=audioElement();const box=document.querySelector(".iv-audio-tools");
+ if(box)box.hidden=false;
+ speechStatus(audioLocale().loading);setAudioSource();
+}
+function stopSpeech(){
+ if(audioPlayer){try{audioPlayer.pause();audioPlayer.removeAttribute("src");audioPlayer.load()}catch(e){}}
+ audioSources=[];speechStatus("");
+}
+function play(v,form){startAudio(soundWord(v,form),false)}
+function playThree(v){
+ const words=["base","past","participle"].map(k=>{
+  if(v.base==="be"&&k==="past")return "was, were";
+  if(v.base==="get"&&k==="participle")return "got, gotten";
+  return soundWord(v,k);
+ });
+ startAudio(words.join(", "),true);
 }
 window.stopIrregularAudio=stopSpeech;
 window.playIrregular=play;
