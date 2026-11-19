@@ -807,6 +807,7 @@ button, input, select, textarea { font-family: inherit; }
 .iv-good{color:var(--secondary)}
 .iv-bad{color:var(--error)}
 
+.iv-audio-tools{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;min-height:2.6rem}.iv-audio-tools #iv-speech-status{font-size:.9rem;color:var(--on-primary-container)}
 </style>
 </head>
 <body>
@@ -847,6 +848,7 @@ button, input, select, textarea { font-family: inherit; }
  <div class="diag-top"><div><span class="kicker">A2 · B1 · B2 · C1</span><h2 class="topic-title" id="iv-title">Nepravidelná slovesa</h2><p class="topic-subtitle" id="iv-sub"></p></div>
  <button type="button" class="btn btn-secondary" id="iv-close">← Zpět</button></div>
  <p class="topic-subtitle" id="iv-guide"></p>
+ <div class="iv-audio-tools" aria-live="polite"><span id="iv-speech-status" role="status"></span><button type="button" class="btn btn-secondary" onclick="stopIrregularAudio()">■ Stop</button></div>
  <div id="iv-learning">
   <div class="iv-controls"><div id="iv-levels" class="cat-pills"></div><div class="iv-actions"><input type="search" class="text-input" id="iv-search" placeholder="Hledat sloveso..." autocomplete="off"><button type="button" class="btn btn-primary" id="iv-start">Procvičit tvary →</button></div></div>
   <div class="diag-top"><h3 id="iv-hint">Poslouchej výslovnost kliknutím na každý tvar.</h3><span class="chip" id="iv-count">91 / 91</span></div>
