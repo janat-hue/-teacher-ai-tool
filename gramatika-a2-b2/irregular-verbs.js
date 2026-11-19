@@ -78,6 +78,7 @@ function playThree(v){
  });
  speakNow(parts.join(". "));
 }
+window.stopIrregularAudio=stopSpeech;
 window.playIrregular=play;
 window.playIrregularTriple=playThree;
 function button(text,click,cls){const b=document.createElement("button");b.type="button";b.className=cls||"btn btn-secondary";b.textContent=text;b.addEventListener("click",click);return b}
