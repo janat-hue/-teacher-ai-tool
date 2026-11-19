@@ -14,12 +14,70 @@ uk:{heading:"Неправильні дієслова",sub:"Три форми, з
 function tr(){return T[language()]}
 function active(){return $("irregular-panel")&&!$("irregular-panel").hidden}
 function filtered(){const needle=search.toLocaleLowerCase();return all.filter(v=>(level==="all"||v.level===level)&&[v.base,v.past,v.participle,v.cs,v.uk].join(" ").toLocaleLowerCase().includes(needle))}
-function stopSpeech(){if("speechSynthesis" in window)window.speechSynthesis.cancel()}
-function readText(v,form){if(v.base==="read"&&form!=="base")return "red";return v[form].split(" / ")[0]}
-function voices(){return window.speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang))}
-function play(v,form){if(!("speechSynthesis" in window)){alert(tr().noVoice);return}
- stopSpeech();let item=new SpeechSynthesisUtterance(readText(v,form));item.lang="en-GB";item.rate=.83;let voice=voices().find(v=>v.lang==="en-GB")||voices().find(v=>v.lang.startsWith("en"));if(voice){item.voice=voice;item.lang=voice.lang}window.speechSynthesis.speak(item)}
-function playThree(v){if(!("speechSynthesis" in window)){alert(tr().noVoice);return}stopSpeech();const voice=voices().find(x=>x.lang==="en-GB")||voices().find(x=>x.lang.startsWith("en"));["base","past","participle"].forEach(form=>{const utterance=new SpeechSynthesisUtterance(readText(v,form));utterance.lang=voice?.lang||"en-GB";if(voice)utterance.voice=voice;utterance.rate=.8;window.speechSynthesis.speak(utterance)})}
+/* Mobile WebKit: no cancel() immediately before speak() and always start
+   directly from the real tap/click. Hold a strong utterance reference. */
+let activeUtterances=[];
+function stopSpeech(){
+ activeUtterances=[];
+ if("speechSynthesis" in window){try{window.speechSynthesis.cancel()}catch(e){}}
+ const el=$("iv-speech-status");if(el)el.textContent="";
+}
+function readText(v,form){
+ if(v.base==="read"&&form!=="base")return "red";
+ return v[form].split(" / ")[0];
+}
+function voices(){
+ if(!("speechSynthesis" in window))return [];
+ try{return window.speechSynthesis.getVoices().filter(v=>/^en([_-]|$)/i.test(v.lang))}
+ catch(e){return []}
+}
+function speechStatus(message){
+ const node=$("iv-speech-status");if(node)node.textContent=message;
+}
+function englishVoice(){
+ const list=voices();
+ return list.find(x=>/^en-GB$/i.test(x.lang))||list.find(x=>/^en-US$/i.test(x.lang))||list[0]||null;
+}
+function speakNow(text){
+ if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance==="undefined"){
+   speechStatus(tr().noVoice);return;
+ }
+ const synth=window.speechSynthesis;
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-GB";utterance.rate=.85;utterance.pitch=1;utterance.volume=1;
+ const voice=englishVoice();if(voice){utterance.voice=voice;utterance.lang=voice.lang}
+ activeUtterances.push(utterance);
+ const status=language()==="cs"?"🔊 Přehrávání…":language()==="uk"?"🔊 Відтворення…":"🔊 Speaking…";
+ speechStatus(status);
+ utterance.onstart=()=>speechStatus(status);
+ utterance.onend=()=>{
+  activeUtterances=activeUtterances.filter(x=>x!==utterance);
+  if(!activeUtterances.length)speechStatus("");
+ };
+ utterance.onerror=e=>{
+  activeUtterances=activeUtterances.filter(x=>x!==utterance);
+  const help=language()==="cs"?"Zvuk se nepodařilo spustit. Zkus otevřít stránku přímo v Safari a klepnout znovu.":language()==="uk"?"Не вдалося відтворити. Відкрийте сторінку в Safari й спробуйте знову.":"Playback failed. Open this page directly in Safari and tap again.";
+  if(e.error!=="canceled"&&e.error!=="interrupted")speechStatus(help);
+ };
+ // The speak() call must remain synchronously inside the button click on iOS.
+ try{
+  if(synth.paused)synth.resume();
+  synth.speak(utterance);
+ }catch(e){speechStatus(tr().noVoice)}
+}
+function play(v,form){
+ // Do not cancel the previous utterance here: mobile Safari can silently
+ // discard the next utterance if cancel() is immediately followed by speak().
+ speakNow(readText(v,form));
+}
+function playThree(v){
+ const parts=["base","past","participle"].map(form=>{
+  if(v.base==="be"&&form==="past")return "was, were";
+  if(v.base==="get"&&form==="participle")return "got, gotten";
+  return readText(v,form);
+ });
+ speakNow(parts.join(". "));
+}
 window.playIrregular=play;
 window.playIrregularTriple=playThree;
 function button(text,click,cls){const b=document.createElement("button");b.type="button";b.className=cls||"btn btn-secondary";b.textContent=text;b.addEventListener("click",click);return b}
