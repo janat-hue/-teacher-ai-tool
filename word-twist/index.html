@@ -7,8 +7,8 @@
   <meta name="description" content="Word Twist — a playful English word game for mixed-level classrooms, with guidance in English, Czech and Ukrainian.">
   <title>Word Twist · Letters have secrets</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <script src="game.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261124-learning">
+  <script src="game.js?v=20261124-learning" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#game">Skip to game</a>
@@ -59,6 +59,13 @@
       <div class="rule-strip"><span class="rule-icon" aria-hidden="true">↻</span><strong data-i18n="ruleStrong">Same letters, same number of letters.</strong><span data-i18n="ruleMore">You may change their order, but you may not add or remove any.</span></div>
     </section>
 
+
+    <section class="purpose wrap" aria-labelledby="purpose-title">
+      <div class="section-heading"><span class="section-tag" data-i18n="purposeTag">MORE THAN A WORD PUZZLE</span><h2 id="purpose-title" data-i18n="purposeTitle">Same letters. New possibilities.</h2></div>
+      <p class="purpose-intro" data-i18n="purposeIntro">Word Twist combines English practice with the pleasure of discovery. Retrieve words you know, uncover new ones and notice how a different order of letters creates a different meaning.</p>
+      <details class="learning-details"><summary data-i18n="whyDetails">What can you practise?</summary><div class="benefit-grid"><article class="benefit-card"><h3 data-i18n="b1">Vocabulary & spelling</h3><p data-i18n="d1">Look closely at how words are built. Meaning clues connect the written word with what it means.</p></article><article class="benefit-card"><h3 data-i18n="b2">Flexible thinking</h3><p data-i18n="d2">Try combinations, look for patterns and change your approach when an idea does not work.</p></article><article class="benefit-card"><h3 data-i18n="b3">Attention & checking</h3><p data-i18n="d3">Keep track of the letters you use and check your solution against the rules.</p></article><article class="benefit-card"><h3 data-i18n="b4">Independence & persistence</h3><p data-i18n="d4">Try again, choose a hint or move on. A mistake can be the start of another attempt.</p></article><article class="benefit-card"><h3 data-i18n="b5">Motivation & confidence</h3><p data-i18n="d5">Short challenges, immediate feedback and a choice of difficulty make progress visible. There is no timer.</p></article><article class="benefit-card"><h3 data-i18n="b6">Collaboration & communication</h3><p data-i18n="d6">Play with a partner: explain your ideas, compare strategies and learn from each other.</p></article></div></details>
+    </section>
+
     <section class="game-section" id="game" aria-labelledby="game-title">
       <div class="wrap">
         <div class="section-heading game-heading"><div><span class="section-tag" data-i18n="challengeLabel">YOUR WORD CHALLENGE</span><h2 id="game-title" data-i18n="gameTitle">Ready to rearrange?</h2></div><span class="sun-stamp" aria-hidden="true">✹</span></div>
@@ -75,6 +82,9 @@
           <p class="instruction" data-i18n="instruction">Make a different English word using all the letters.</p>
           <div class="challenge-word" id="challenge-word" aria-label="Starting word">CAT</div>
           <div class="word-length" id="word-length" aria-label="Answer word lengths">3 letters</div>
+
+          <div class="audio-actions" role="group" aria-label="English pronunciation"><button id="listen-source" class="soft-button" type="button" data-i18n="listenSource">Listen to the starting word</button><button id="listen-answer" class="soft-button hidden" type="button" data-i18n="listenAnswer">Listen to the answer</button><button id="stop-audio" class="text-button hidden" type="button" data-i18n="stopAudio">Stop audio</button></div>
+          <p class="audio-help" data-i18n="audioHelp">Listen, then say the word aloud. The answer audio becomes available after you solve or skip the puzzle.</p><p id="audio-status" class="audio-status" role="status" aria-live="polite"></p>
           <div class="letter-rack" id="letter-rack" aria-label="Tap letters to enter an answer"></div>
           <form id="answer-form" class="answer-form" novalidate>
             <label for="answer" data-i18n="answerLabel">Your answer</label>
@@ -87,9 +97,12 @@
           <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
           <div class="game-actions"><button id="hint-button" class="soft-button" type="button"><span aria-hidden="true">✦</span> <span data-i18n="hint">Get a hint</span></button><button id="skip-button" class="soft-button" type="button" data-i18n="skip">Skip word →</button><button id="next-button" class="next-button hidden" type="button"><span data-i18n="next">Next word</span> →</button></div>
         </div>
+        <p class="score-note" data-i18n="scoreNote">10 points per correct answer. No time pressure.</p>
         <div class="under-game"><span><span aria-hidden="true">✳</span> <span data-i18n="noLogin">No login. No tracking. Just words.</span></span><button id="restart-button" class="restart-button" type="button"><span aria-hidden="true">↻</span> <span data-i18n="restart">Start this level again</span></button></div>
       </div>
     </section>
+
+    <section class="beyond wrap" aria-labelledby="beyond-title"><div class="section-heading"><span class="section-tag" data-i18n="beyondTag">MAKE THE WORD YOURS</span><h2 id="beyond-title" data-i18n="beyondTitle">Found it? Now use it.</h2></div><p class="purpose-intro" data-i18n="beyondIntro">Choose one small follow-up. This is where a letter puzzle becomes an opportunity to use English.</p><div class="follow-grid"><article class="follow-card"><span class="follow-symbol" aria-hidden="true">Aa</span><h3 data-i18n="use1">Explain it</h3><p data-i18n="use1Text">What does your new word mean? Explain it, draw it or give an example.</p></article><article class="follow-card"><span class="follow-symbol" aria-hidden="true">“…”</span><h3 data-i18n="use2">Say it & connect it</h3><p data-i18n="use2Text">Listen, say the word aloud and use it in a sentence. Can you put both anagram words into one short story?</p></article><article class="follow-card"><span class="follow-symbol" aria-hidden="true">?</span><h3 data-i18n="use3">Share your strategy</h3><p data-i18n="use3Text">What helped you find the answer? Compare ideas with a partner.</p></article></div><aside class="reflection"><h3 data-i18n="reflectTitle">One question to take away</h3><p data-i18n="reflectText">What helped me find a solution, and what will I try differently next time?</p></aside><details class="learning-details small-note"><summary data-i18n="audioNote">Pronunciation uses your browser’s English voice; availability and accent depend on your device.</summary><p data-i18n="dictionaryNote">Found another English anagram? The game checks a prepared word list. Verify your word and meaning in a dictionary and discuss it with your teacher.</p></details></section>
   </main>
   <footer class="footer wrap"><div class="footer-brand">word<span>twist.</span> <span class="footer-dot">✳</span></div><p data-i18n="footerText">A little word game for big imaginations.</p><p class="photo-credit">Hero photo: <a href="https://unsplash.com/photos/a-pile-of-wooden-letters-sitting-on-top-of-a-table-Mq2lhWl54ME" target="_blank" rel="noopener noreferrer">Debby Hudson / Unsplash</a> · <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash License</a></p></footer>
 </body>
