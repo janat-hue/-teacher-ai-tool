@@ -12,6 +12,10 @@ const STRINGS = {
   }
 };
 
+Object.assign(STRINGS.en,{"purposeTag":"MORE THAN A WORD PUZZLE","purposeTitle":"Same letters. New possibilities.","purposeIntro":"Word Twist combines English practice with the pleasure of discovery. Retrieve words you know, uncover new ones and notice how a different order of letters creates a different meaning.","whyDetails":"What can you practise?","b1":"Vocabulary & spelling","d1":"Look closely at how words are built. Meaning clues connect the written word with what it means.","b2":"Flexible thinking","d2":"Try combinations, look for patterns and change your approach when an idea does not work.","b3":"Attention & checking","d3":"Keep track of the letters you use and check your solution against the rules.","b4":"Independence & persistence","d4":"Try again, choose a hint or move on. A mistake can be the start of another attempt.","b5":"Motivation & confidence","d5":"Short challenges, immediate feedback and a choice of difficulty make progress visible. There is no timer.","b6":"Collaboration & communication","d6":"Play with a partner: explain your ideas, compare strategies and learn from each other.","beyondTag":"MAKE THE WORD YOURS","beyondTitle":"Found it? Now use it.","beyondIntro":"Choose one small follow-up. This is where a letter puzzle becomes an opportunity to use English.","use1":"Explain it","use1Text":"What does your new word mean? Explain it, draw it or give an example.","use2":"Say it & connect it","use2Text":"Listen, say the word aloud and use it in a sentence. Can you put both anagram words into one short story?","use3":"Share your strategy","use3Text":"What helped you find the answer? Compare ideas with a partner.","reflectTitle":"One question to take away","reflectText":"What helped me find a solution, and what will I try differently next time?","listenSource":"Listen to the starting word","listenAnswer":"Listen to the answer","stopAudio":"Stop audio","audioHelp":"Listen, then say the word aloud. The answer audio becomes available after you solve or skip the puzzle.","audioUnavailable":"Audio is not available in this browser. You can keep playing.","audioFailed":"The voice could not play. Try again or continue without audio.","audioPlaying":"Playing: {word}","audioNote":"Pronunciation uses your browser’s English voice; availability and accent depend on your device.","dictionaryNote":"Found another English anagram? The game checks a prepared word list. Verify your word and meaning in a dictionary and discuss it with your teacher.","scoreNote":"10 points per correct answer. No time pressure."});
+Object.assign(STRINGS.cs,{"purposeTag":"VÍC NEŽ SLOVNÍ HLAVOLAM","purposeTitle":"Stejná písmena. Nové možnosti.","purposeIntro":"Word Twist propojuje procvičování angličtiny s radostí z objevování. Vybavuj si známá slova, objevuj nová a všímej si, jak změna pořadí písmen promění význam.","whyDetails":"Co při hraní procvičuješ?","b1":"Slovní zásoba a pravopis","d1":"Všímej si stavby slov. Významové nápovědy propojují psanou podobu slova s jeho významem.","b2":"Pružné přemýšlení","d2":"Zkoušej kombinace, hledej souvislosti a změň postup, když první nápad nefunguje.","b3":"Soustředění a kontrola","d3":"Sleduj použitá písmena a ověřuj, zda řešení odpovídá pravidlům.","b4":"Samostatnost a vytrvalost","d4":"Zkus další možnost, využij nápovědu nebo se posuň dál. Chyba může být začátkem dalšího pokusu.","b5":"Motivace a sebedůvěra","d5":"Krátké výzvy, okamžitá zpětná vazba a volitelná obtížnost zviditelňují pokrok. Bez časového limitu.","b6":"Spolupráce a komunikace","d6":"Hrajte ve dvojici: vysvětlujte své nápady, porovnávejte postupy a učte se jeden od druhého.","beyondTag":"OSVOJ SI NOVÉ SLOVO","beyondTitle":"Máš ho? Teď ho použij.","beyondIntro":"Vyber si jeden krátký navazující úkol. Právě tím se přesmyčka mění v příležitost používat angličtinu.","use1":"Vysvětli význam","use1Text":"Co nové slovo znamená? Vysvětli ho, nakresli nebo uveď příklad.","use2":"Poslechni, vyslov a propoj","use2Text":"Poslechni si slovo, řekni ho nahlas a použij ve větě. Dokážeš obě slova přesmyčky propojit v krátkém příběhu?","use3":"Poděl se o postup","use3Text":"Co ti pomohlo najít odpověď? Porovnej své nápady se spolužákem.","reflectTitle":"Jedna otázka na závěr","reflectText":"Co mi pomohlo najít řešení a co příště vyzkouším jinak?","listenSource":"Poslechnout zadání","listenAnswer":"Poslechnout odpověď","stopAudio":"Zastavit zvuk","audioHelp":"Poslechni si slovo a řekni ho nahlas. Poslech odpovědi se zpřístupní po vyřešení nebo přeskočení úlohy.","audioUnavailable":"Tento prohlížeč poslech nepodporuje. Ve hře můžeš pokračovat.","audioFailed":"Hlas se nepodařilo přehrát. Zkus to znovu nebo pokračuj bez poslechu.","audioPlaying":"Přehrávám: {word}","audioNote":"Výslovnost používá anglický hlas prohlížeče; dostupnost a přízvuk závisejí na zařízení.","dictionaryNote":"Našel/našla jsi další anglickou přesmyčku? Hra ověřuje připravený seznam slov. Ověř své slovo i jeho význam ve slovníku a prober ho s učitelem.","scoreNote":"10 bodů za správnou odpověď. Bez časového limitu."});
+Object.assign(STRINGS.uk,{"purposeTag":"БІЛЬШЕ НІЖ СЛОВЕСНА ГОЛОВОЛОМКА","purposeTitle":"Ті самі літери. Нові можливості.","purposeIntro":"Word Twist поєднує практику англійської з радістю відкриття. Пригадуй знайомі слова, відкривай нові та помічай, як інший порядок літер змінює значення.","whyDetails":"Що можна тренувати?","b1":"Словниковий запас і правопис","d1":"Уважно розглядай будову слів. Підказки пов’язують написання слова з його значенням.","b2":"Гнучке мислення","d2":"Випробовуй комбінації, шукай закономірності та змінюй підхід, якщо перша ідея не спрацювала.","b3":"Увага й перевірка","d3":"Стеж за використаними літерами та перевіряй, чи відповідає рішення правилам.","b4":"Самостійність і наполегливість","d4":"Спробуй ще раз, обери підказку або рухайся далі. Помилка може стати початком нової спроби.","b5":"Мотивація і впевненість","d5":"Короткі завдання, миттєвий відгук і вибір складності роблять поступ помітним. Без таймера.","b6":"Співпраця і спілкування","d6":"Грайте в парі: пояснюйте ідеї, порівнюйте стратегії та навчайтеся одне в одного.","beyondTag":"ЗРОБИ СЛОВО СВОЇМ","beyondTitle":"Знайшов / знайшла? Використай його.","beyondIntro":"Обери одне коротке завдання. Так головоломка стає нагодою використовувати англійську.","use1":"Поясни значення","use1Text":"Що означає нове слово? Поясни, намалюй або наведи приклад.","use2":"Послухай, вимов і поєднай","use2Text":"Послухай слово, вимов його вголос і склади речення. Чи можеш поєднати обидва слова анаграми в короткій історії?","use3":"Поділися стратегією","use3Text":"Що допомогло знайти відповідь? Порівняй ідеї з партнером.","reflectTitle":"Одне запитання на завершення","reflectText":"Що допомогло мені знайти рішення і що наступного разу я спробую інакше?","listenSource":"Послухати початкове слово","listenAnswer":"Послухати відповідь","stopAudio":"Зупинити звук","audioHelp":"Послухай слово й вимов його вголос. Озвучення відповіді доступне після розв’язання або пропуску завдання.","audioUnavailable":"Озвучення недоступне в цьому браузері. Можна продовжити гру.","audioFailed":"Не вдалося відтворити голос. Спробуй знову або продовжуй без звуку.","audioPlaying":"Відтворюється: {word}","audioNote":"Вимова використовує англійський голос браузера; доступність і акцент залежать від пристрою.","dictionaryNote":"Знайшов / знайшла іншу англійську анаграму? Гра перевіряє підготовлений список. Перевір слово та його значення у словнику й обговори з учителем.","scoreNote":"10 балів за правильну відповідь. Без обмеження часу."});
+
 const state = { language:'en', level:'easy', order:[], index:0, score:0, resolved:false, hintCount:0, tileUsed:[], lastResult:null };
 const $ = id => document.getElementById(id);
 const by = selector => Array.from(document.querySelectorAll(selector));
@@ -21,6 +25,7 @@ const loc = (key, values={}) => (STRINGS[state.language][key] || STRINGS.en[key]
 function shuffle(arr){const list=[...arr];for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}return list;}
 function current(){return state.order[state.index];}
 function translateUI(){
+  stopAudio();
   document.documentElement.lang=state.language;
   by('[data-i18n]').forEach(node=>node.textContent=loc(node.dataset.i18n));
   by('.lang-button').forEach(el=>{const active=el.dataset.lang===state.language;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active));});
@@ -52,6 +57,7 @@ function syncTiles(){
 }
 function setFeedback(type,message){const box=$('feedback');box.className=`feedback ${type}`;box.textContent=message;}
 function renderRound(){
+  stopAudio();
   document.body.classList.remove('is-complete');
   if(state.index>=state.order.length){renderComplete();return;}
   const q=current();state.resolved=false;state.hintCount=0;state.lastResult=null;
@@ -68,9 +74,10 @@ function renderRound(){
   $('hint-button').disabled=false;
   $('hint-button').querySelector('span[data-i18n]').textContent=loc('hint');
   by('.instruction').forEach(n=>n.textContent=loc('instruction'));
-  setFeedback('','');renderTiles();
+  setFeedback('','');renderTiles();updateAudio();
 }
 function settle(success,answer){
+  stopAudio();
   state.resolved=true;state.lastResult={success,answer};
   if(success)state.score+=10;
   $('score').textContent=state.score;
@@ -78,7 +85,7 @@ function settle(success,answer){
   $('answer').disabled=true;$('check-button').disabled=true;
   by('.letter-tile').forEach(b=>b.disabled=true);
   $('hint-button').classList.add('hidden');$('skip-button').classList.add('hidden');$('next-button').classList.remove('hidden');
-  setFeedback(success?'success':'info',success?loc('correct',{answer,source:current().from}):loc('skipped',{answer}));
+  setFeedback(success?'success':'info',success?loc('correct',{answer,source:current().from}):loc('skipped',{answer}));updateAudio();
 }
 function checkAnswer(e){if(e)e.preventDefault();if(state.resolved||!current())return;
   const guess=$('answer').value.trim();if(!trimWord(guess)){setFeedback('error',loc('fill'));return;}
@@ -93,6 +100,7 @@ function showHint(){if(state.resolved||!current())return;
   else{setFeedback('info',loc('secondHint',{first:current().to[0]}));$('hint-button').disabled=true;}
 }
 function renderComplete(){
+  stopAudio();updateAudio();
   document.body.classList.add('is-complete');
   $('challenge-word').textContent='✳';$('challenge-word').classList.add('done-icon');
   $('word-length').textContent='';$('round-number').textContent=`${state.order.length} / ${state.order.length}`;
@@ -108,7 +116,43 @@ function startLevel(level){
   by('.level-button').forEach(b=>{let selected=b.dataset.level===level;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected));});
   renderRound();
 }
+
+function stopAudio(){
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();
+  if($('stop-audio'))$('stop-audio').classList.add('hidden');
+  if($('audio-status'))$('audio-status').textContent='';
+}
+function updateAudio(){
+  const source=$('listen-source'),answer=$('listen-answer');
+  if(!source||!answer)return;
+  const supported='speechSynthesis' in window&&'SpeechSynthesisUtterance' in window;
+  const active=!!current();
+  source.disabled=!active||!supported;
+  answer.disabled=!active||!state.resolved||!supported;
+  answer.classList.toggle('hidden',!active||!state.resolved);
+  if(!supported&&$('audio-status'))$('audio-status').textContent=loc('audioUnavailable');
+}
+function listenWord(answer=false){
+  if(!current()||(answer&&!state.resolved))return;
+  if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){if($('audio-status'))$('audio-status').textContent=loc('audioUnavailable');return;}
+  stopAudio();
+  const text=answer?state.lastResult.answer:current().from;
+  const speech=new SpeechSynthesisUtterance(text.toLowerCase());
+  speech.lang='en-GB';speech.rate=.85;
+  const voices=window.speechSynthesis.getVoices();
+  const voice=voices.find(v=>/^en[-_]GB$/i.test(v.lang))||voices.find(v=>/^en[-_]/i.test(v.lang));
+  if(voice)speech.voice=voice;
+  speech.onstart=()=>{if($('audio-status'))$('audio-status').textContent=loc('audioPlaying',{word:text});if($('stop-audio'))$('stop-audio').classList.remove('hidden');};
+  speech.onend=()=>{if($('stop-audio'))$('stop-audio').classList.add('hidden');if($('audio-status'))$('audio-status').textContent='';};
+  speech.onerror=e=>{if(['interrupted','canceled'].includes(e.error))return;if($('stop-audio'))$('stop-audio').classList.add('hidden');if($('audio-status'))$('audio-status').textContent=loc('audioFailed');};
+  try{window.speechSynthesis.speak(speech);}catch{if($('audio-status'))$('audio-status').textContent=loc('audioFailed');}
+}
+
 function init(){
+  if($('listen-source'))$('listen-source').addEventListener('click',()=>listenWord(false));
+  if($('listen-answer'))$('listen-answer').addEventListener('click',()=>listenWord(true));
+  if($('stop-audio'))$('stop-audio').addEventListener('click',stopAudio);
+  window.addEventListener('pagehide',stopAudio);
   by('.lang-button').forEach(b=>b.addEventListener('click',()=>{state.language=b.dataset.lang;translateUI();if(current()&&!state.resolved){setFeedback('','');}else if(current()&&state.resolved&&state.lastResult){setFeedback(state.lastResult.success?'success':'info',state.lastResult.success?loc('correct',{answer:state.lastResult.answer,source:current().from}):loc('skipped',{answer:state.lastResult.answer}));}}));
   by('.level-button').forEach(b=>b.addEventListener('click',()=>startLevel(b.dataset.level)));
   $('answer-form').addEventListener('submit',checkAnswer);
