@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18372f">
+  <meta name="description" content="Word Twist — a playful English word game for mixed-level classrooms, with guidance in English, Czech and Ukrainian.">
+  <title>Word Twist · Letters have secrets</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#game">Skip to game</a>
+  <div class="background-sprig sprig-one" aria-hidden="true">✳</div>
+  <header class="site-header wrap">
+    <a href="#top" class="brand" aria-label="Word Twist homepage">
+      <span class="brand-icon" aria-hidden="true"><span>A</span><span>↔</span><span>Z</span></span>
+      <span class="brand-name">word<span>twist.</span></span>
+    </a>
+    <div class="header-actions">
+      <span class="micro-label" id="lang-label">LANGUAGE</span>
+      <div class="language-switch" role="group" aria-label="Language / Jazyk / Мова">
+        <button class="lang-button active" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-button" data-lang="cs" aria-pressed="false">CZ</button>
+        <button class="lang-button" data-lang="uk" aria-pressed="false">УКР</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap" aria-labelledby="hero-heading">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="sparkle">✳</span><span data-i18n="eyebrow">WORDPLAY FOR CURIOUS MINDS</span></div>
+        <h1 id="hero-heading"><span data-i18n="heroOne">Same letters.</span><br><em data-i18n="heroTwo">New meaning.</em></h1>
+        <p class="hero-text" data-i18n="heroText">Sometimes a word is hiding another word. Rearrange the letters and find the surprise.</p>
+        <div class="hero-demo" aria-label="SILENT becomes LISTEN">
+          <span class="demo-word" aria-label="SILENT">SILENT</span><span class="demo-arrow" aria-hidden="true">⟷</span><span class="demo-word light" aria-label="LISTEN">LISTEN</span>
+        </div>
+        <a class="primary-cta" href="#game"><span data-i18n="playNow">Let's play</span> <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="photo-viewport"></div>
+        <div class="photo-shade"></div>
+        <div class="floating-tile tile-one">A</div>
+        <div class="floating-tile tile-two">?</div>
+        <div class="floating-tile tile-three">N</div>
+        <div class="art-label" data-i18n="artLabel">A LITTLE LETTER MAGIC</div>
+      </div>
+    </section>
+
+    <section class="guide wrap" aria-labelledby="guide-title">
+      <div class="section-heading"><span class="section-tag" data-i18n="beforeStart">BEFORE YOU START</span><h2 id="guide-title" data-i18n="whatAnagram">What is an anagram?</h2></div>
+      <div class="definition-grid">
+        <article class="definition-card en"><span class="definition-lang">ENGLISH</span><p>An anagram is a word or phrase made by rearranging <strong>all the letters</strong> of another word or phrase. Use each letter exactly once for each time it appears.</p></article>
+        <article class="definition-card cs"><span class="definition-lang">ČESKY</span><p>Anagram neboli <strong>přesmyčka</strong> je slovo nebo slovní spojení, které vznikne přeskupením <strong>všech písmen</strong> jiného výrazu. Každé písmeno použij tolikrát, kolikrát se v původním výrazu vyskytuje.</p></article>
+        <article class="definition-card uk" lang="uk"><span class="definition-lang">УКРАЇНСЬКОЮ</span><p><strong>Анаграма</strong> — це слово або словосполучення, утворене перестановкою <strong>всіх літер</strong> іншого слова чи словосполучення. Кожну літеру потрібно використати стільки разів, скільки вона зустрічається в початковому слові.</p></article>
+      </div>
+      <div class="rule-strip"><span class="rule-icon" aria-hidden="true">↻</span><strong data-i18n="ruleStrong">Same letters, same number of letters.</strong><span data-i18n="ruleMore">You may change their order, but you may not add or remove any.</span></div>
+    </section>
+
+    <section class="game-section" id="game" aria-labelledby="game-title">
+      <div class="wrap">
+        <div class="section-heading game-heading"><div><span class="section-tag" data-i18n="challengeLabel">YOUR WORD CHALLENGE</span><h2 id="game-title" data-i18n="gameTitle">Ready to rearrange?</h2></div><span class="sun-stamp" aria-hidden="true">✹</span></div>
+        <div class="level-picker" role="group" aria-label="Choose difficulty">
+          <button class="level-button selected" data-level="easy" aria-pressed="true"><span class="level-number">01</span><strong data-i18n="levelEasy">Easy</strong><small>A1–A2</small></button>
+          <button class="level-button" data-level="medium" aria-pressed="false"><span class="level-number">02</span><strong data-i18n="levelMedium">Medium</strong><small>A2–B1</small></button>
+          <button class="level-button" data-level="hard" aria-pressed="false"><span class="level-number">03</span><strong data-i18n="levelHard">Challenge</strong><small>B1–B2</small></button>
+          <button class="level-button" data-level="expert" aria-pressed="false"><span class="level-number">04</span><strong data-i18n="levelExpert">Expert</strong><small>B2+</small></button>
+        </div>
+
+        <div class="game-card">
+          <div class="game-top"><span class="game-badge" data-i18n="roundLabel">ROUND</span><span id="round-number" class="round-number" aria-live="polite">01 / 12</span><div class="game-top-space"></div><span class="score-label" data-i18n="scoreLabel">SCORE</span><strong id="score" aria-live="polite">0</strong></div>
+          <div class="progress-track" aria-label="Round progress"><div id="progress-fill" class="progress-fill"></div></div>
+          <p class="instruction" data-i18n="instruction">Make a different English word using all the letters.</p>
+          <div class="challenge-word" id="challenge-word" aria-label="Starting word">CAT</div>
+          <div class="word-length" id="word-length" aria-label="Answer word lengths">3 letters</div>
+          <div class="letter-rack" id="letter-rack" aria-label="Tap letters to enter an answer"></div>
+          <form id="answer-form" class="answer-form" novalidate>
+            <label for="answer" data-i18n="answerLabel">Your answer</label>
+            <div class="answer-input-row">
+              <input id="answer" type="text" maxlength="32" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" placeholder="TYPE A WORD..." aria-describedby="feedback">
+              <button id="check-button" type="submit" class="check-button"><span data-i18n="check">Check</span> <span aria-hidden="true">✓</span></button>
+            </div>
+            <div class="little-instructions"><span data-i18n="tapOrType">Tap the letters or type your answer.</span><button id="erase-button" type="button" class="text-button" data-i18n="erase">Erase</button></div>
+          </form>
+          <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+          <div class="game-actions"><button id="hint-button" class="soft-button" type="button"><span aria-hidden="true">✦</span> <span data-i18n="hint">Get a hint</span></button><button id="skip-button" class="soft-button" type="button" data-i18n="skip">Skip word →</button><button id="next-button" class="next-button hidden" type="button"><span data-i18n="next">Next word</span> →</button></div>
+        </div>
+        <div class="under-game"><span><span aria-hidden="true">✳</span> <span data-i18n="noLogin">No login. No tracking. Just words.</span></span><button id="restart-button" class="restart-button" type="button"><span aria-hidden="true">↻</span> <span data-i18n="restart">Start this level again</span></button></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer wrap"><div class="footer-brand">word<span>twist.</span> <span class="footer-dot">✳</span></div><p data-i18n="footerText">A little word game for big imaginations.</p><p class="photo-credit">Hero photo: <a href="https://unsplash.com/photos/a-pile-of-wooden-letters-sitting-on-top-of-a-table-Mq2lhWl54ME" target="_blank" rel="noopener noreferrer">Debby Hudson / Unsplash</a> · <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash License</a></p></footer>
+</body>
+</html>
